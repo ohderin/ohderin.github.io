@@ -1,15 +1,28 @@
 import * as React from "react";
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  asChild?: boolean;
-  variant?: "outline" | "default";
-  size?: "icon" | "default";
-};
+type Variant = "outline" | "default";
+type Size = "icon" | "default";
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: false;
+  variant?: Variant;
+  size?: Size;
+  children: React.ReactNode;
+}
+
+interface ButtonAsChildProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  asChild: true;
+  variant?: Variant;
+  size?: Size;
+  children: React.ReactElement;
+}
+
+type Props = ButtonProps | ButtonAsChildProps;
+
+export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>(
   (
     {
-      asChild,
+      asChild = false,
       variant = "default",
       size = "default",
       className = "",
@@ -28,23 +41,26 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size === "icon"
         ? "w-12 h-12 p-0"
         : "h-12 px-6 py-2";
+
     if (asChild) {
-      // For use as a wrapper around <a> or other components
+      const child = React.Children.only(children) as React.ReactElement<
+        React.AnchorHTMLAttributes<HTMLAnchorElement>
+      >;
       return React.cloneElement(
-        React.Children.only(children as React.ReactElement) as any,
+        child,
         {
-          className:
-            base + " " + variantClass + " " + sizeClass + " " + className,
-          ref,
           ...props,
-        }
+          className: base + " " + variantClass + " " + sizeClass + " " + (child.props.className ?? "") + " " + className,
+          ref,
+        } as React.AnchorHTMLAttributes<HTMLAnchorElement> & { ref: typeof ref }
       );
     }
+
     return (
       <button
-        ref={ref}
+        ref={ref as React.Ref<HTMLButtonElement>}
         className={base + " " + variantClass + " " + sizeClass + " " + className}
-        {...props}
+        {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}
       >
         {children}
       </button>

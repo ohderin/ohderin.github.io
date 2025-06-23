@@ -1,8 +1,11 @@
+"use client";
+
 import React from "react";
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { FaTwitter, FaInstagram, FaDiscord } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const socials = [
   {
@@ -52,33 +55,28 @@ const Toad = () => (
     transition={{ duration: 1, type: "spring" }}
     className="mx-auto flex justify-center my-8"
   >
-    {/* TOAD*/}
-    <svg width="220" height="180" viewBox="0 0 220 180" fill="none">
-      <ellipse cx="110" cy="120" rx="95" ry="45" fill="#6ad877" filter="url(#blur)"/>
-      <ellipse cx="110" cy="95" rx="65" ry="45" fill="#9d7af3"/>
-      <ellipse cx="75" cy="85" rx="16" ry="15" fill="#ffe761" stroke="#353535" strokeWidth="3"/>
-      <ellipse cx="145" cy="85" rx="16" ry="15" fill="#ffe761" stroke="#353535" strokeWidth="3"/>
-      <circle cx="75" cy="85" r="7" fill="#3c2c23" />
-      <circle cx="145" cy="85" r="7" fill="#3c2c23" />
-      <ellipse cx="110" cy="115" rx="22" ry="12" fill="#e949db" />
-      <ellipse cx="110" cy="140" rx="40" ry="14" fill="#44c8ee" />
-      <ellipse cx="35" cy="140" rx="15" ry="7" fill="#8dffef"/>
-      <ellipse cx="185" cy="140" rx="15" ry="7" fill="#f5a8e6"/>
-    </svg>
+    <Image
+      src="/images/toad.png"
+      alt="Psychedelic dapper toad"
+      width={300}
+      height={300}
+      className="rounded-2xl shadow-2xl border-4 border-[#6ad877] bg-white/40"
+      priority
+    />
   </motion.div>
 );
 
 const InfoBox = () => (
   <Card className="max-w-lg mx-auto bg-white/70 shadow-2xl rounded-2xl p-6 mb-8 border-2 border-[#6ad877]">
     <CardContent>
-      <h2 className="text-3xl font-bold mb-2 text-[#3c2c23] psychedelic-font">Welcome to Toadtopia 🐸</h2>
+      <h2 className="text-3xl font-bold mb-2 text-[#3c2c23] psychedelic-font">Toad Sensei 🐸</h2>
       <p className="text-lg mb-4 text-[#222]">
-        Journey into a world of vibrant color, swirling patterns, and the mystical toad! Toadtopia is your psychedelic oasis on the web. Explore the visuals, learn fun facts, and connect with the cosmic toad community.
+        Follow Toad Sensei on a journey of spiritual awakening.
       </p>
       <ul className="list-disc pl-4 text-base">
-        <li>✨ Psychedelic vibes, day and night</li>
-        <li>🐸 Toad facts & lore</li>
-        <li>🔗 Connect with fellow toad travelers</li>
+        <li>✨ Teachings of the Toad</li>
+        <li>🐸 Toad Lore</li>
+        <li>🔗 Fellow Toad Travelers</li>
       </ul>
     </CardContent>
   </Card>
