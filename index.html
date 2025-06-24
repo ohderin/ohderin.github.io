@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Toadtopia 🐸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Framer Motion (for animation) via CDN -->
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
+  <!-- React + ReactDOM for Framer Motion (needed for the animation to work) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Font for psychedelic effect -->
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: radial-gradient(circle at 20% 20%, #a9f6ff 0%, #9d7af3 30%, #f5a8e6 60%, #3ddc97 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Comic Neue', Comic Sans MS, cursive;
+      overflow-x: hidden;
+      animation: bgmove 20s linear infinite alternate;
+    }
+    @keyframes bgmove {
+      0% { background-position: 0% 50%; filter: hue-rotate(0deg) blur(0px);}
+      50% { background-position: 100% 50%; filter: hue-rotate(80deg) blur(4px);}
+      100% { background-position: 0% 50%; filter: hue-rotate(360deg) blur(0px);}
+    }
+    .psychedelic-font {
+      font-family: 'Comic Neue', 'Comic Sans MS', cursive;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 12px #a9f6ff, 0 -2px 6px #f5a8e6;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/javascript">
+    const { motion } = window["framer-motion"];
+    const e = React.createElement;
+
+    function SocialLink({ href, label, icon }) {
+      return e('a', {
+        href, target: "_blank", rel: "noopener noreferrer",
+        className: "bg-white/80 hover:bg-[#a9f6ff]/60 border-2 border-[#e949db] shadow-lg rounded-full flex items-center justify-center w-12 h-12 transition-all duration-200 mr-4 last:mr-0",
+        'aria-label': label,
+        style: { textDecoration: "none" }
+      }, e('span', { className: "text-2xl" }, icon));
+    }
+
+    function Toad() {
+      return e(
+        motion.div,
+        {
+          initial: { y: 100, opacity: 0 },
+          animate: { y: 0, opacity: 1 },
+          transition: { duration: 1, type: "spring" },
+          className: "mx-auto flex justify-center my-8"
+        },
+        e("img", {
+          src: "./toad.png",
+          width: 300,
+          height: 300,
+          alt: "Dapper Toad",
+          className: "rounded-2xl shadow-2xl border-4 border-[#6ad877] bg-white/40"
+        })
+      );
+    }
+
+    function App() {
+      return e(
+        'main',
+        { className: "min-h-screen flex flex-col items-center justify-center px-2 py-8 relative" },
+        e(Toad),
+        e('div', {
+          className: "max-w-lg mx-auto bg-white/70 shadow-2xl rounded-2xl p-6 mb-8 border-2 border-[#6ad877]"
+        },
+          e('h2', { className: "text-3xl font-bold mb-2 text-[#3c2c23] psychedelic-font" }, "Welcome to Toadtopia 🐸"),
+          e('p', { className: "text-lg mb-4 text-[#222]" },
+            "Journey into a world of vibrant color, swirling patterns, and the mystical toad! Toadtopia is your psychedelic oasis on the web. Explore the visuals, learn fun facts, and connect with the cosmic toad community."
+          ),
+          e('ul', { className: "list-disc pl-4 text-base" },
+            e('li', null, "✨ Psychedelic vibes, day and night"),
+            e('li', null, "🐸 Toad facts & lore"),
+            e('li', null, "🔗 Connect with fellow toad travelers")
+          )
+        ),
+        e('div', { className: "flex flex-row gap-6 justify-center my-6" },
+          e(SocialLink, {
+            href: "https://twitter.com/",
+            label: "Twitter",
+            icon: "🐦"
+          }),
+          e(SocialLink, {
+            href: "https://instagram.com/",
+            label: "Instagram",
+            icon: "📸"
+          }),
+          e(SocialLink, {
+            href: "https://discord.com/",
+            label: "Discord",
+            icon: "💬"
+          })
+        )
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(e(App));
+  </script>
+</body>
+</html>
